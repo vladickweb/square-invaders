@@ -5,7 +5,7 @@ class Ship {
         this.canvasSize = canvasSize;
                 
         // Ship Dimensions
-        this.height = 50; 
+        this.height = 10; 
         this.width = 50;
 
         // Ship Position
@@ -15,7 +15,7 @@ class Ship {
         this.xPosition = game.canvasSize.w/2-(this.width/2)
         this.x = this.xPosition ;  
 
-        // Collition
+        // Collision
         this.isDestroyed = false;  
 
         // Power Up  
@@ -41,6 +41,7 @@ class Ship {
     isAmmunition(){
         if(this.ammunition[0]){
             this.ammunition[0].draw()
+            
         } 
     }
 
@@ -69,7 +70,7 @@ class Ship {
             setTimeout(() => {
                 this.isPowerUp = false;
                 this.speed = 5
-            }, 15000)
+            }, 10000)
         } 
     }
 
