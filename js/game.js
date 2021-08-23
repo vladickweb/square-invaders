@@ -15,6 +15,7 @@ const game = {
 	ship: undefined,
 	//arrCartesianEnemies: [],
 	enemies: [],
+	linearEnemies: [],
 	army: [],
 	powerUp: [],
 
@@ -24,6 +25,8 @@ const game = {
 	aleatoryRightLimit: undefined,
 	aleatoryLeftLimit: undefined,
 	randomSign: undefined,
+	aleatoryGravity: undefined,
+	aleatoryColor: undefined,
 	// aleatoryDirection: undefined,
 	
 
@@ -33,14 +36,14 @@ const game = {
 		SPACE: " ",
 	},
 
-	aleatorySpeed(){
-		aleatorySpeed = 5 + Math.floor(Math.random() * 30)
-		console.log(aleatorySpeed)
-	},
+	// aleatorySpeed(){
+	// 	aleatorySpeed = 5 + Math.floor(Math.random() * 30)
+	// 	console.log(aleatorySpeed)
+	// },
 
-	aleatoryInterval(){
+	// aleatoryInterval(){
 
-	},
+	// },
 
 	// aleatoryX(){
 	// 	aleatoryX = Math.floor(Math.random() * this.canvasSize.w)
@@ -74,6 +77,7 @@ const game = {
 			ship.isAmmunition();
 			this.cleanObjects();
 			ship.powerUpEffect();
+			// this.cartesianArmy.checkMov();
 			
 		}, this.timeInterval);
 		
@@ -86,16 +90,19 @@ const game = {
 		}, 1000)
 
 		setInterval(() => {
-			this.aleatoryX =  Math.floor(Math.random() * this.width)
-			this.aleatorySpeed = 5 + Math.floor(Math.random() * 10)
+			this.aleatoryX =  Math.floor(Math.random() * this.canvasSize.w)
+			this.aleatorySpeed = 10 + Math.floor(Math.random() * 20)
 			this.aleatorySize = 20 + Math.floor(Math.random() * 45)
 			// this.aleatoryDirection = -1 + Math.floor(Math.random() * 2)
 			this.randomSign = Math.floor(Math.random()*2) == 1 ? 1 : -1
-			this.aleatoryRightLimit = 200 + this.aleatorySize + Math.floor(Math.random() * this.canvasSize.w-this.aleatorySize)
-			this.aleatoryLeftLimit = Math.floor(Math.random() * this.aleatoryRightLimit)
+			this.aleatoryLeftLimit = 50 + Math.floor(Math.random() * this.canvasSize.w/2)
+			this.aleatoryRightLimit = this.aleatoryLeftLimit + this.aleatorySize + Math.floor(Math.random() * this.canvasSize.w-this.aleatorySize)
+			this.aleatoryGravity = this.aleatorySpeed - 5
+			this.aleatoryColor = '#'+Math.floor(Math.random()*16777215).toString
 		
 
 			this.generateEnemies();
+			this.generateLinearEnemies();
 		}, 1500)
 
 		this.controls();
@@ -124,7 +131,8 @@ const game = {
 	drawAll() {
 		ship.draw();
 		this.powerUp[0] ? this.powerUp[0].draw() : null;
-		this.enemies[0] ? this.enemies[0].draw() : null
+		this.enemies[0] ? this.enemies[0].draw() : null;
+		this.linearEnemies[0] ? this.linearEnemies[0].draw() : null;
 		this.cartesianArmy.draw();
 	},
 
@@ -148,6 +156,10 @@ const game = {
 		if (this.enemies.length > 0) {
 			this.enemies = this.enemies.filter((elm) => elm.y >= 0 && elm.y < this.canvasSize.h)
 		}
+
+		if (this.linearEnemies.length > 0){
+			this.linearEnemies = this.linearEnemies.filter((elm) => elm.y >= 0 && elm.y < this.canvasSize.h)
+		}
 	},
 	generatePowerUps() {
 		if (this.powerUp.length === 0) {
@@ -160,6 +172,14 @@ const game = {
 			
 			this.enemies.push(new Enemies(this.ctx, this.canvasSize, this.aleatoryX, this.aleatorySpeed, this.aleatorySpeed -3, this.aleatorySize, this.aleatorySize, this.aleatoryRightLimit, this.aleatoryLeftLimit, this.randomSign))
 		}		
+	},
+
+	generateLinearEnemies() {
+		console.log('entro a generar')
+		if (this.linearEnemies.length === 0) {
+			console.log('GENERO')
+			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.aleatorySpeed, this.aleatorySize, this.aleatoryColor, this.aleatoryX))
+		}
 	},
 
 	isCollision() {},

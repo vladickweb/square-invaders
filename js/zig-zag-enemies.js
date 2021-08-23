@@ -1,15 +1,15 @@
 class  Enemies{
-    constructor(ctx, canvasSize, x, speedX, speedY, height, width, direction, rightLimit, leftLimit, randomSign) {
+    constructor(ctx, canvasSize, x, speedX, speedY, height, width, direction, rightLimit, leftLimit, randomSign, aleatoryGravity) {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.x = x
         this.y = 0
         this.height = height
         this.width = width
-        this.speedX = speedX       //15
+        this.speedX = 5     //15
         this.speedY = 6
         this.direction = direction
-        this.gravity = 10      //10
+        this.gravity = 3 //10
         this.rightLimit = rightLimit
         this.leftLimit = leftLimit
         this.randomSign = randomSign
@@ -43,20 +43,24 @@ class  Enemies{
     // }
     moveTo(){
         this.y += this.speedY
-        this.x += this.speedX
 
-        if (this.x > 2* this.canvasSize.w /4){
-            console.log('entro al if')
-            this.speedX -= this.gravity
+        // if (1 * this.canvasSize.w/4 > this.x < 3 * this.canvasSize.w/4){
+            if (this.leftLimit > this.x < this.rightLimit){
+            console.log('entro al zig-zag')
             this.x += this.speedX
-        }
+
+            if (this.x > 2* this.canvasSize.w /4){
+                console.log('entro al if')
+                this.speedX -= this.gravity
+                this.x += this.speedX
+            }
 
 
-        else if (this.x <  this.canvasSize.w / 4) {
-            console.log('entro al else')
-            this.speedX += this.gravity
-            
-            this.x += this.speedX
+            else if (this.x <  50 +this.canvasSize.w / 4) {
+                console.log('entro al else')
+                this.speedX += this.gravity
+                this.x += this.speedX
+            }
         }
     }
         

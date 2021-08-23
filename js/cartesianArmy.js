@@ -4,32 +4,32 @@ class CartesianArmy {
     this.canvasSize = canvasSize;
     this.arrCartesianEnemies = [];
     this.orientation = true; //right
-    this.velocity = 15;
+    
   }
 
   checkMov() {
+
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+
       if (this.orientation) {
-        if (this.arrCartesianEnemies[i].x + 10 >= this.canvasSize.w) {
+
+        if (this.arrCartesianEnemies[i].x + 1 > this.canvasSize.w-20) {
           this.movDown();
-
-          //console.log ("ARMY DOWN!!")
-
           this.orientation = false;
+
         } else {
           this.movRight();
           //console.log ("ARMY RIGHT!!")
         }
       } else {
-        if (this.arrCartesianEnemies[i].x - 10 <= 0) {
-          //this.arrCartesianEnemies.movDown();
+        if (this.arrCartesianEnemies[i].x - 1 <= 0) {
+          
           this.movDown();
-          //console.log ("ARMY DOWN!!")
           this.orientation = true;
+
         } else {
-          //this.arrCartesianEnemies.moveLeft();
           this.movLeft();
-          //console.log ("ARMY LEFT!!")
+         
         }
       }
     }
@@ -37,16 +37,17 @@ class CartesianArmy {
 
   movRight() {
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-      this.arrCartesianEnemies[i].x++; //+= this.velocity;
+      this.arrCartesianEnemies[i].x += 1; //+= this.velocity;
     }
   }
   movLeft() {
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-      this.arrCartesianEnemies[i].x--; //-= this.velocity;
+      this.arrCartesianEnemies[i].x -= 1; //-= this.velocity;
     }
   }
   movDown() {
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+
       this.arrCartesianEnemies[i].y += 20; //+= this.velocity;
     }
   }
