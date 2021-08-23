@@ -12,9 +12,9 @@ const game = {
 	timeInterval: 60,
 
 	background: undefined,
+
 	ship: undefined,
-	//arrCartesianEnemies: [],
-	enemies: [],
+	zigZagEnemies: [],
 	linearEnemies: [],
 	army: [],
 	powerUp: [],
@@ -27,8 +27,8 @@ const game = {
 	randomSign: undefined,
 	aleatoryGravity: undefined,
 	aleatoryColor: undefined,
-	// aleatoryDirection: undefined,
-	
+	counterPoints: 0,
+	score: undefined,
 
 	keys: {
 		RIGHT: "ArrowRight",
@@ -36,28 +36,12 @@ const game = {
 		SPACE: " ",
 	},
 
-	// aleatorySpeed(){
-	// 	aleatorySpeed = 5 + Math.floor(Math.random() * 30)
-	// 	console.log(aleatorySpeed)
-	// },
-
-	// aleatoryInterval(){
-
-	// },
-
-	// aleatoryX(){
-	// 	aleatoryX = Math.floor(Math.random() * this.canvasSize.w)
-	// }, 
-
-	aleatoryDirection(){
-
-	},
-
 	init(id) {
 		this.canvas = document.getElementById(id);
 		this.ctx = this.canvas.getContext("2d");
 		this.setDimensions();
 		ship = new Ship(this.ctx, this.canvasSize);
+		this.showScore()
 		this.cartesianArmy = new CartesianArmy (this.ctx, this.canvasSize);//OBJECT ARMY!!!!
 		this.cartesianArmy.recruit();
 		this.start();
@@ -71,25 +55,23 @@ const game = {
 	},
 
 	start() {
-		setInterval(() => {
+		interval = setInterval(() => {
+			this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
 			this.clear();
 			this.drawAll();
-			ship.isAmmunition();
 			this.cleanObjects();
-			ship.powerUpEffect();
-			// this.cartesianArmy.checkMov();
+			this.powerUpEffect();
+			this.generatePowerUps()
+			this.generateZigZagEnemies();
+			this.generateLinearEnemies();
+			this.isCollision()
+			this.shipCollision()
+			ship.isAmmunition();
+			this.updateScore()
+			console.log(ship.ammunition.length)
 			
-		}, this.timeInterval);
-		
-		setInterval(() => {
-			this.generatePowerUps();
-		}, 3000);
 
-		setInterval(() => {
-			this.cartesianArmy.checkMov();
-		}, 1000)
-
-		setInterval(() => {
+			
 			this.aleatoryX =  Math.floor(Math.random() * this.canvasSize.w)
 			this.aleatorySpeed = 10 + Math.floor(Math.random() * 20)
 			this.aleatorySize = 20 + Math.floor(Math.random() * 45)
@@ -98,15 +80,18 @@ const game = {
 			this.aleatoryLeftLimit = 50 + Math.floor(Math.random() * this.canvasSize.w/2)
 			this.aleatoryRightLimit = this.aleatoryLeftLimit + this.aleatorySize + Math.floor(Math.random() * this.canvasSize.w-this.aleatorySize)
 			this.aleatoryGravity = this.aleatorySpeed - 5
-			this.aleatoryColor = '#'+Math.floor(Math.random()*16777215).toString
-		
+			this.randomColor = '#'+Math.floor(Math.random()*16777215).toString()
+			
+			
+		}, 1000 / this.FPS);
 
-			this.generateEnemies();
-			this.generateLinearEnemies();
-		}, 1500)
+
+		setInterval(() => {
+				this.cartesianArmy.checkMov();
+		}, 1000)
 
 		this.controls();
-		this.generateEnemies();
+		// this.generateZigZagEnemies();
 
 	},
 
@@ -120,7 +105,7 @@ const game = {
 					ship.moveLeft();
 					break;
 				case this.keys.SPACE:
-					ship.shoot();
+					ship.createBullet()
 					break;
 			}
 		};
@@ -131,9 +116,14 @@ const game = {
 	drawAll() {
 		ship.draw();
 		this.powerUp[0] ? this.powerUp[0].draw() : null;
-		this.enemies[0] ? this.enemies[0].draw() : null;
+		if (this.counterPoints > 5){
+			this.cartesianArmy.draw();
+		}
+		else {
+		this.zigZagEnemies[0] ? this.zigZagEnemies[0].draw() : null;
 		this.linearEnemies[0] ? this.linearEnemies[0].draw() : null;
-		this.cartesianArmy.draw();
+		}
+		
 	},
 
 	clear() {
@@ -153,38 +143,119 @@ const game = {
 			);
 		}
 
-		if (this.enemies.length > 0) {
-			this.enemies = this.enemies.filter((elm) => elm.y >= 0 && elm.y < this.canvasSize.h)
+		if (this.zigZagEnemies.length > 0) {
+			this.zigZagEnemies = this.zigZagEnemies.filter((elm) => elm.y >= 0 && elm.y < this.canvasSize.h)
 		}
 
 		if (this.linearEnemies.length > 0){
 			this.linearEnemies = this.linearEnemies.filter((elm) => elm.y >= 0 && elm.y < this.canvasSize.h)
 		}
 	},
+	
+	powerBullets() {
+		if (this.framesCounter % 10 === 0){
+			ship.createPowerBullets()
+		}
+	},
+
+	powerUpEffect(){
+		 if (ship.isPowerUp){
+			 ship.speed = ship.powerUpSpeed
+			 this.powerBullets()
+				if (this.framesCounter %1000 === 0){
+					ship.isPowerUp = false
+					ship.speed = 5
+				}
+		 }
+    },
+
 	generatePowerUps() {
-		if (this.powerUp.length === 0) {
+		if (this.framesCounter %1000 === 0 && this.powerUp.length === 0){
 			this.powerUp.push(new PowerUp(this.ctx, this.canvasSize));
 		}
 	},
 
-	generateEnemies() {
-		if (this.enemies.length === 0) {
+	generateZigZagEnemies() {
+		if (this.zigZagEnemies.length === 0 ) {
 			
-			this.enemies.push(new Enemies(this.ctx, this.canvasSize, this.aleatoryX, this.aleatorySpeed, this.aleatorySpeed -3, this.aleatorySize, this.aleatorySize, this.aleatoryRightLimit, this.aleatoryLeftLimit, this.randomSign))
+			this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.aleatoryX, this.aleatorySpeed, this.aleatorySpeed -3, this.aleatorySize, this.aleatorySize, this.aleatoryRightLimit, this.aleatoryLeftLimit, this.randomSign, this.randomColor))
 		}		
 	},
 
 	generateLinearEnemies() {
-		console.log('entro a generar')
+		// console.log('entro a generar')
 		if (this.linearEnemies.length === 0) {
-			console.log('GENERO')
-			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.aleatorySpeed, this.aleatorySize, this.aleatoryColor, this.aleatoryX))
+			// console.log('GENERO')
+			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.aleatorySpeed, this.aleatorySize, this.randomColor, this.aleatoryX))
 		}
 	},
 
-	isCollision() {},
+	isCollision() {
+		if (this.powerUp.length > 0 && ship.ammunition.length > 0){
+			if (ship.ammunition[0].y <= this.powerUp[0].y + this.powerUp[0].width && 
+			ship.ammunition[0].x <= (this.powerUp[0].x + this.powerUp[0].width) &&
+			ship.ammunition[0].x + ship.ammunition[0].width >= this.powerUp[0].x){
+				ship.ammunition.pop()
+				this.powerUp.pop()
+				ship.isPowerUp = true
+				this.zigZagEnemies.pop()
+				this.linearEnemies.pop()
+			}
+		}
+		else if (ship.ammunition.length > 0){
+			if (ship.ammunition[0].y <= this.linearEnemies[0].y + this.linearEnemies[0].size && 
+			ship.ammunition[0].x <= (this.linearEnemies[0].x + this.linearEnemies[0].size) &&
+			ship.ammunition[0].x + ship.ammunition[0].width >= this.linearEnemies[0].x){
+				ship.ammunition.pop()
+				this.linearEnemies.pop()
+				this.counterPoints++
+			}
 
-	gameOver() {},
+			else if (ship.ammunition[0].y <= this.zigZagEnemies[0].y + this.zigZagEnemies[0].width && 
+			ship.ammunition[0].x <= (this.zigZagEnemies[0].x + this.zigZagEnemies[0].width) &&
+			ship.ammunition[0].x + ship.ammunition[0].width >= this.zigZagEnemies[0].x){
+				ship.ammunition.pop()
+				this.zigZagEnemies.pop()
+				this.counterPoints++
+			}
 
-	showScore() {},
+					
+		} 
+			
+	},
+
+	shipCollision(){
+		if (this.linearEnemies.length > 0){
+			if (ship.y <= this.linearEnemies[0].y + this.linearEnemies[0].size &&
+			ship.x <= this.linearEnemies[0].x + this.linearEnemies[0].size &&
+			ship.x + ship.width >= this.linearEnemies[0].x){
+				ship.isDestroyed = true;
+				this.gameOver()
+				
+			}
+		}
+	},
+		
+
+		
+	
+	gameOver() {
+		clearInterval(interval)
+		setTimeout(() => {
+			this.clear()
+			this.ctx.font = '30px space_invaders';
+        	this.ctx.fillText(`GAME OVER`, 150, 300)
+			console.log('done')
+
+		},500)
+		
+	},
+
+	showScore() {
+		this.score = new Score(this.ctx, this.canvasSize, 'red')
+	},
+
+	updateScore() {
+		this.score.draw()
+	}
 };

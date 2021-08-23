@@ -1,3 +1,23 @@
+/* @font-face {
+    font-family: 'invaders';
+    src: url('../assets/space_invaders')
+} */
+/* 
+@font-face {
+    font-family: "Space invaders";
+    src: url(../assets/space_invaders/space_invaders.ttf);
+} */
+
+
+
+
+body {
+    margin: 0 ;
+    padding: 0;
+    font-family: 'Space invaders';
+}
+
 canvas {
     border: 1px solid #000;
 }
+

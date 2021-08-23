@@ -12,7 +12,7 @@ class PowerUp {
         this.x = 100
         this.y = 100
 
-        this.speed = 5   
+        this.speed = 2 
     }
 
     moveTo(){
