@@ -2,10 +2,10 @@ class Bullet {
     constructor(ctx, canvasSize) {
         this.ctx = ctx;
         this.canvasSize = canvasSize
-        this.x = ship.x +20
         this.y = ship.y
-        this.height = 40
-        this.width = 10
+        this.height = 13
+        this.width = 13
+        this.x = (ship.x + ship.width/2) - this.width / 2
         this.speed = 20
     }
 
@@ -15,13 +15,11 @@ class Bullet {
 
     draw(){
         if (!ship.isPowerUp){
-            this.ctx = game.ctx
             this.ctx.fillStyle = 'green'
             game.ctx.fillRect(ship.ammunition[0].x, ship.ammunition[0].y, ship.ammunition[0].width, ship.ammunition[0].height)
             this.move()
 
         } else {
-            this.ctx = game.ctx
             this.ctx.fillStyle = 'orange'
             game.ctx.fillRect(ship.ammunition[0].x, ship.ammunition[0].y, ship.ammunition[0].width, ship.ammunition[0].height)
             this.move()
@@ -29,8 +27,22 @@ class Bullet {
             this.move()
             game.ctx.fillRect(ship.ammunition[0].x, ship.ammunition[0].y, ship.ammunition[0].width, ship.ammunition[0].height)
             this.move()
-            
         }
     }
+
+    // zoomOut(){
+        
+    //     this.height = 3;
+    //     this.width = 3
+        
+    // }
+
+    // drawZoomOut(){
+    //     this.zoomOut()
+    //     this.ctx = game.ctx
+    //     this.ctx.fillStyle = 'orange'
+    //     this.ctx.fillRect(this.x, this.y, this.height, this.width)
+    //     this.move()
+    // }
 
 }

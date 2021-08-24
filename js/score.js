@@ -9,7 +9,7 @@ class Score {
 
 
     draw(){
-        this.ctx.font = '30px space_invaders';
+        this.ctx.font = '35px space invaders Regular';
         this.ctx.fillText(`SCORE ${game.counterPoints}!`, 10, 50)
     }
 

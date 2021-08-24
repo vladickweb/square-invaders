@@ -2,10 +2,10 @@ class  ZigZagEnemies{
     constructor(ctx, canvasSize, x, speedX, speedY, height, width, direction, rightLimit, leftLimit, randomSign, aleatoryGravity, randomColor) {
         this.ctx = ctx
         this.canvasSize = canvasSize
-        this.x = x
+        this.x = 95
         this.y = 0
-        this.height = height
-        this.width = width
+        this.height = 150
+        this.width = 150
         this.speedX = 1     //15
         this.speedY = 1
         this.direction = direction
@@ -14,35 +14,12 @@ class  ZigZagEnemies{
         this.leftLimit = leftLimit
         this.randomSign = randomSign
         this.changedSpeed = undefined
-        this.color = randomColor
+        this.color = 'blue'
 
     }
 
- 
-
-    // moveTo(){
-    //     this.y += this.speedY
-
-    //     if(this.x > 0 && this.x < this.leftLimit){
-    //         this.x += this.speedX
-
-    //         if (this.x > 3* this.rightLimit){
-    //             console.log('entro al if')
-    //             this.speedX -= this.gravity
-    //             this.x += this.speedX
-    //         }
-
-
-    //         else if (this.x <  this.leftLimit) {
-    //             console.log('entro al else')
-    //             this.speedX += this.gravity
-                
-    //             this.x += this.speedX
-    //         }
-
-    //     }
-    // }
     moveTo(){
+        console.log('me dibujo')
         this.y += this.speedY
 
         // if (1 * this.canvasSize.w/4 > this.x < 3 * this.canvasSize.w/4){
@@ -65,12 +42,11 @@ class  ZigZagEnemies{
         }
     }
         
-
-
+    
 
     draw(){
         // console.log('DIBUJO ENEMIGOS')
-        this.ctx = game.ctx
+        // this.ctx = game.ctx
         this.ctx.fillStyle = this.color
         game.ctx.strokeRect(game.zigZagEnemies[0].x, game.zigZagEnemies[0].y, game.zigZagEnemies[0].width, game.zigZagEnemies[0].height)
         this.moveTo()

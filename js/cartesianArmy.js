@@ -3,77 +3,79 @@ class CartesianArmy {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.arrCartesianEnemies = [];
-    this.orientation = true; //right
-    
+    this.isOrientationRigth = true;
   }
 
-  checkMov() {
 
-    for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+  movH(){
 
-      if (this.orientation) {
+    if (this.isOrientationRigth){
 
-        if (this.arrCartesianEnemies[i].x + 1 > this.canvasSize.w-20) {
-          this.movDown();
-          this.orientation = false;
+      for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+        this.arrCartesianEnemies[i].x += 5; 
+      }
+    }
+    else {
 
-        } else {
-          this.movRight();
-          //console.log ("ARMY RIGHT!!")
-        }
-      } else {
-        if (this.arrCartesianEnemies[i].x - 1 <= 0) {
-          
-          this.movDown();
-          this.orientation = true;
-
-        } else {
-          this.movLeft();
-         
-        }
+      for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+        this.arrCartesianEnemies[i].x -= 5; 
       }
     }
   }
 
-  movRight() {
-    for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-      this.arrCartesianEnemies[i].x += 1; //+= this.velocity;
-    }
-  }
-  movLeft() {
-    for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-      this.arrCartesianEnemies[i].x -= 1; //-= this.velocity;
-    }
-  }
   movDown() {
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
 
-      this.arrCartesianEnemies[i].y += 20; //+= this.velocity;
+      this.arrCartesianEnemies[i].y += 10;
+    }
+  }
+  
+  checkMov() {
+
+    for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
+
+        if ((this.arrCartesianEnemies[i].x + 5 > this.canvasSize.w-20) && this.isOrientationRigth) {
+
+          this.isOrientationRigth = false;
+          return false;
+          
+        }
+        else if ((this.arrCartesianEnemies[i].x - 5 < 0) && this.isOrientationRigth == false){
+
+          this.isOrientationRigth = true;
+          return false;
+          
+        }
+    }
+    return true;
+  }
+
+  movArmy(){
+   
+    if (this.checkMov() == true){
+      this.movH();
+    }
+    else{
+      this.movDown();
     }
   }
 
   recruit() {
-    /*
-    this.arrCartesianEnemies.push(
-        new CartesianEnemy(this.ctx, this.canvasSize, 20, 50, 1));
-        */
-    //constructor(ctx, canvasSize, x, y, id)
 
     for (let i = 0; i < 6; i++) {
       this.arrCartesianEnemies.push(
-        new CartesianEnemy(this.ctx, this.canvasSize, i * 40, 50, 1)
+        new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 50, 1)
       );
-      this.arrCartesianEnemies.push(
-        new CartesianEnemy(this.ctx, this.canvasSize, i * 40, 100, 2)
-      );
-      this.arrCartesianEnemies.push(
-        new CartesianEnemy(this.ctx, this.canvasSize, i * 40, 150, 3)
-      );
-      this.arrCartesianEnemies.push(
-        new CartesianEnemy(this.ctx, this.canvasSize, i * 40, 200, 4)
-      );
+      // this.arrCartesianEnemies.push(
+      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 100, 2)
+      // );
+      // this.arrCartesianEnemies.push(
+      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 150, 3)
+      // );
+      // this.arrCartesianEnemies.push(
+      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 200, 4)
+      // );
     }
-    // console.log("EJERCITO RECLUTADO!!" + this.arrCartesianEnemies);
   }
 
   draw() {

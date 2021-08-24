@@ -5,7 +5,7 @@ class Ship {
         this.canvasSize = canvasSize;
                 
         // Ship Dimensions
-        this.height = 10; 
+        this.height = 50; 
         this.width = 50;
 
         // Ship Position
@@ -45,7 +45,12 @@ class Ship {
 
     isAmmunition(){
         if(this.ammunition[0]){
+            // if (game.counterPoints > 5){
+                // this.ammunition[0].drawZoomOut()
+            // }
             this.ammunition[0].draw()
+            
+            
         } 
     }
 
@@ -63,19 +68,14 @@ class Ship {
         this.x <= game.canvasSize.w -30 ? this.x += this.speed : null
     }
 
-   
-
-
     moveLeft(){
         this.x >= 30 ? this.x -= this.speed : null
     }
 
-
-
-
-
-
+    zoomOut(){
+        if (this.height > 10){
+            this.height -= .3
+            this.width -= .3
+        }
+    }
 }
-
-
-
