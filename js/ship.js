@@ -48,7 +48,9 @@ class Ship {
             // if (game.counterPoints > 5){
                 // this.ammunition[0].drawZoomOut()
             // }
-            this.ammunition[0].draw()
+            if (!this.ammunition[0].isZoom){
+                this.ammunition[0].draw()
+            }
             
             
         } 
@@ -76,6 +78,15 @@ class Ship {
         if (this.height > 10){
             this.height -= .3
             this.width -= .3
+        }
+    }
+
+    zoomOutBullet(){
+        if(this.ammunition.length > 0){
+            this.ammunition[0].height = 3
+            this.ammunition[0].width = 3
+            this.ammunition[0].drawZoomOut()
+
         }
     }
 }

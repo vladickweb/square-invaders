@@ -152,8 +152,9 @@ const game = {
 			this.finalBoss.draw()
 			this.linearEnemies.length = 0
 			this.zigZagEnemies.length = 0
-			// ship.zoomOut()
-			// .zoomOut()
+			ship.zoomOut()
+			ship.zoomOutBullet()
+			
 		}
 
 	},
@@ -189,7 +190,7 @@ const game = {
 	},
 
 	powerBullets() {
-		if (this.framesCounter % 10 === 0) {
+		if (this.framesCounter % 10 === 0 && this.counterPoints < 5) {
 			ship.createPowerBullets()
 		}
 	},
@@ -349,3 +350,4 @@ const game = {
 		this.score.draw()
 	}
 };
+

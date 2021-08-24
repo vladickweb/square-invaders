@@ -7,6 +7,7 @@ class Bullet {
         this.width = 13
         this.x = (ship.x + ship.width/2) - this.width / 2
         this.speed = 20
+        this.isZoom = false
     }
 
     move() {
@@ -30,6 +31,8 @@ class Bullet {
         }
     }
 
+    
+
     // zoomOut(){
         
     //     this.height = 3;
@@ -37,12 +40,12 @@ class Bullet {
         
     // }
 
-    // drawZoomOut(){
-    //     this.zoomOut()
-    //     this.ctx = game.ctx
-    //     this.ctx.fillStyle = 'orange'
-    //     this.ctx.fillRect(this.x, this.y, this.height, this.width)
-    //     this.move()
-    // }
+    drawZoomOut(){
+        this.ctx = game.ctx
+        this.ctx.fillStyle = 'orange'
+        this.ctx.fillRect(this.x+6, this.y, this.height, this.width)
+        this.move()
+        this.isZoom = true
+    }
 
 }
