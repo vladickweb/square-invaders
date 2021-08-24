@@ -9,22 +9,16 @@ class CartesianEnemy {
   }
 
   draw() {
-
-     
+      if(this.x%3==0){
       this.ctx = game.ctx;
       this.ctx.fillStyle = "#003300";
       this.ctx.fillRect(this.x, this.y, this.width, this.height);
-   
-/*
-    if (this.id % 2 == 0) {
-      this.ctx = game.ctx;
-      this.ctx.fillStyle = "#003300";
-      this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    } else {
-      this.ctx = game.ctx;
+      }
+      else{
+        this.ctx = game.ctx;
       this.ctx.fillStyle = "#009900";
       this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    */
+      }
   }
+  
 }
