@@ -2,7 +2,7 @@ class Score {
     constructor(ctx, canvasSize, color){
         this.ctx = ctx,
         this.canvasSize = canvasSize,
-        this.color = color
+        this.color = 'white'
         
     }
 

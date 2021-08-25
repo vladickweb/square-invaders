@@ -2,10 +2,10 @@ class LinearEnemies{
     constructor(ctx, canvasSize, speed, size, color, position){
         this.ctx = ctx
         this.canvasSize = canvasSize
-        this.speed = 2
-        this.size = 100
+        this.speed = speed
+        this.size = size
         this.color = color
-        this.x = 100
+        this.x = position
         this.y = 0
     }
 

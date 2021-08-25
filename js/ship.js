@@ -67,11 +67,11 @@ class Ship {
     }
 
     moveRight(){
-        this.x <= game.canvasSize.w -30 ? this.x += this.speed : null
+        this.x <= game.canvasSize.w - this.width - 10? this.x += this.speed : null
     }
 
     moveLeft(){
-        this.x >= 30 ? this.x -= this.speed : null
+        this.x >= 10 ? this.x -= this.speed: null
     }
 
     zoomOut(){

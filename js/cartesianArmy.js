@@ -66,15 +66,15 @@ class CartesianArmy {
       this.arrCartesianEnemies.push(
         new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 50, 1)
       );
-      // this.arrCartesianEnemies.push(
-      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 100, 2)
-      // );
-      // this.arrCartesianEnemies.push(
-      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 150, 3)
-      // );
-      // this.arrCartesianEnemies.push(
-      //   new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 200, 4)
-      // );
+      this.arrCartesianEnemies.push(
+        new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 100, 2)
+      );
+      this.arrCartesianEnemies.push(
+        new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 150, 3)
+      );
+      this.arrCartesianEnemies.push(
+        new CartesianEnemy(this.ctx, this.canvasSize, i * 50, 200, 4)
+      );
     }
   }
 

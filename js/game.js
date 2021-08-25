@@ -31,17 +31,16 @@ const game = {
 	counterPoints: 0,
 	finalBossDamage: 0,
 	score: undefined,
+	restrictAddEventListener: false,
 
 	
 	music: new Audio('../assets/bensound-epic.mp3'),
 	laser: new Audio('../assets/SpaceLaserShot PE1095407.mp3'),
 
 
-	keys: {
-		RIGHT: "ArrowRight",
-		LEFT: "ArrowLeft",
-		SPACE: " ",
-	},
+
+	keys: {},
+
 
 	init(id) {
 		this.canvas = document.getElementById(id);
@@ -52,10 +51,16 @@ const game = {
 		this.showScore()
 		// this.cartesianArmy = new CartesianArmy (this.ctx, this.canvasSize);//OBJECT ARMY!!!!
 		// this.cartesianArmy.recruit();
-		this.start();
+		// this.start();
 		this.cartesianArmy = new CartesianArmy(this.ctx, this.canvasSize);
 		this.cartesianArmy.recruit();
 		this.finalBoss = new FinalBoss(this.ctx, this.canvasSize)
+		this.initialBackground()
+
+
+		// this.initialBackground = new BgStart(this.ctx, this.canvasSize)
+		
+		// this.initialBackground.draw()
 	},
 
 	setDimensions() {
@@ -63,6 +68,14 @@ const game = {
 		this.height = this.canvasSize.h;
 		this.canvas.width = this.width;
 		this.canvas.height = this.height;
+	},
+
+	initialBackground(){
+    	let bgImg = new Image();
+    	bgImg.src = '../assets/startBackground2.jpg';
+    	bgImg.onload = () => {
+        this.ctx.drawImage(bgImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
+}
 	},
 
 	start() {
@@ -83,54 +96,24 @@ const game = {
 			// }
 			
 			this.isCollision()
-			this.shipCollision()
+			this.shipCollisionLinear()
+			this.shipCollisionZigZag()
 			this.isCollisionPowerUp()
 			ship.isAmmunition();
 			this.updateScore()
 			this.cartesianArmy.movArmy()
 			this.win()
-		
-
-			this.aleatoryX =  Math.floor(Math.random() * this.canvasSize.w)
-			this.aleatorySpeed = 10 + Math.floor(Math.random() * 20)
-			this.aleatorySize = 20 + Math.floor(Math.random() * 45)
-			// this.aleatoryDirection = -1 + Math.floor(Math.random() * 2)
-			this.randomSign = Math.floor(Math.random()*2) == 1 ? 1 : -1
-			this.aleatoryLeftLimit = 50 + Math.floor(Math.random() * this.canvasSize.w/2)
-			this.aleatoryRightLimit = this.aleatoryLeftLimit + this.aleatorySize + Math.floor(Math.random() * this.canvasSize.w-this.aleatorySize)
-			this.aleatoryGravity = this.aleatorySpeed - 5
-			this.randomColor = '#'+Math.floor(Math.random()*16777215).toString()
+			this.controls();
 			
 
 
 
 		}, 1000 / this.FPS);
 
-		// this.music.play()
 
 		setInterval(() => {
 			this.cartesianArmy.checkMov();
 		}, 1000)
-
-		this.controls();
-
-	},
-
-	controls() {
-		document.onkeydown = (e) => {
-			switch (e.key) {
-				case this.keys.RIGHT:
-					ship.moveRight();
-					break;
-				case this.keys.LEFT:
-					ship.moveLeft();
-					break;
-				case this.keys.SPACE:
-					ship.createBullet()
-					this.laser.play()
-					break;
-			}
-		};
 
 
 	},
@@ -142,13 +125,13 @@ const game = {
 		ship.draw();
 		this.powerUp[0] ? this.powerUp[0].draw() : null;
 		this.cartesianArmy.draw()
-		if (this.cartesianArmy.arrCartesianEnemies.length === 0 && this.counterPoints < 5) {
+		if (this.cartesianArmy.arrCartesianEnemies.length === 0 && this.counterPoints < 100) {
 
 			this.zigZagEnemies[0] ? this.zigZagEnemies[0].draw() : null;
 			this.linearEnemies[0] ? this.linearEnemies[0].draw() : null;
 
 		}
-		else if (this.counterPoints >= 5) {
+		else if (this.counterPoints >= 100) {
 			this.finalBoss.draw()
 			this.linearEnemies.length = 0
 			this.zigZagEnemies.length = 0
@@ -190,7 +173,7 @@ const game = {
 	},
 
 	powerBullets() {
-		if (this.framesCounter % 10 === 0 && this.counterPoints < 5) {
+		if (this.framesCounter % 10 === 0 && this.counterPoints < 100) {
 			ship.createPowerBullets()
 		}
 	},
@@ -215,7 +198,7 @@ const game = {
 	generateZigZagEnemies() {
 		if (this.zigZagEnemies.length === 0) {
 
-			this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.aleatoryX, this.aleatorySpeed, this.aleatorySpeed - 3, this.aleatorySize, this.aleatorySize, this.aleatoryRightLimit, this.aleatoryLeftLimit, this.randomSign, this.randomColor))
+			this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(2, 7), this.getRandomInt(5, 15), this.getRandomInt(10, 100), this.getRandomInt(10,100), 'yellow'))
 		}
 	},
 
@@ -223,7 +206,7 @@ const game = {
 		// console.log('entro a generar')
 		if (this.linearEnemies.length === 0) {
 			// console.log('GENERO')
-			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.aleatorySpeed, this.aleatorySize, this.randomColor, this.aleatoryX))
+			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(5, 15), this.getRandomInt(20, 100), 'blue', this.getRandomInt(0, 400)))
 		}
 	},
 
@@ -291,7 +274,19 @@ const game = {
 
 	},
 
-	shipCollision() {
+	shipCollisionZigZag(){
+		if (this.zigZagEnemies.length > 0) {
+			if (ship.y <= this.zigZagEnemies[0].y + this.zigZagEnemies[0].width &&
+				ship.x <= this.zigZagEnemies[0].x + this.zigZagEnemies[0].width &&
+				ship.x + ship.width >= this.zigZagEnemies[0].x) {
+				ship.isDestroyed = true;
+				this.gameOver()
+			}
+		}
+	},
+
+
+	shipCollisionLinear() {
 		if (this.linearEnemies.length > 0) {
 			if (ship.y <= this.linearEnemies[0].y + this.linearEnemies[0].size &&
 				ship.x <= this.linearEnemies[0].x + this.linearEnemies[0].size &&
@@ -300,6 +295,7 @@ const game = {
 				this.gameOver()
 			}
 		}
+		
 		if(this.cartesianArmy.arrCartesianEnemies.length > 0) {
 			this.cartesianArmy.arrCartesianEnemies.some((enemy) => {
 				if(enemy.y + enemy.height >= ship.y && ship.x <= enemy.x + enemy.width && ship.x + ship.width >= enemy.x){
@@ -309,13 +305,7 @@ const game = {
 				}
 			})
 		}
-		// if (this.counterPoints > 5) {
-		// 	if (ship.y <= this.finalBoss.y + this.finalBoss.width) {
-		// 		ship.isDestroyed = true;
-		// 		this.gameOver()
-		// 	}
-		// }
-
+	
 	},
 
 	win(){
@@ -332,6 +322,8 @@ const game = {
 
 	gameOver() {
 		clearInterval(interval)
+		// button.classList.remove('hideBtn')
+		button.removeAttribute('disabled')
 		setTimeout(() => {
 			this.clear()
 			this.ctx.font = '30px space invaders Regular';
@@ -343,11 +335,42 @@ const game = {
 	},
 
 	showScore() {
-		this.score = new Score(this.ctx, this.canvasSize, 'red')
+		this.score = new Score(this.ctx, this.canvasSize, 'white')
 	},
 
 	updateScore() {
 		this.score.draw()
+	},
+
+	controls(){
+		if(this.keys[37] || this.keys[65]){
+			console.log('izquierda')
+			ship.moveLeft()
+		}
+		if (this.keys[39] || this.keys[68]){
+			console.log('izquierda')
+			ship.moveRight()
+		}
+		if(this.keys[32]){
+			ship.createBullet()
+			this.laser.play()
+		}
 	}
 };
 
+window.addEventListener('keydown', function(e) {
+	game.keys[e.keyCode || e.which] = true;
+}, true)
+
+window.addEventListener('keyup', function(e){
+	game.keys[e.keyCode || e.which] = false;
+}, true)
+
+
+const button = document.getElementById('start')
+button.addEventListener('click', () => {
+	game.start()
+	button.setAttribute('disabled', '')
+	// button.classList.add('hideBtn')
+})
+// game.initialBackground()
