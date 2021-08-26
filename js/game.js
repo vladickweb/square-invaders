@@ -31,12 +31,12 @@ const game = {
 	restrictAddEventListener: false,
 	level: undefined,
 	isPlaying: false,
-	winGameAudio: new Audio('./assets/win.mp3'),
-	gameOverMusic: new Audio("./assets/gameOver.mp3"),
-	powerUpSound: new Audio("./assets/cogerPowerUp.mp3"),
-	laser: new Audio("./assets/laser.mp3"),
-	gameSound: new Audio("./assets/sonidoJuego.mp3"),
-	boom: new Audio('./assets/boom.mp3'),
+	winGameAudio: new Audio('assets/win.mp3'),
+	gameOverMusic: new Audio("assets/gameOver.mp3"),
+	powerUpSound: new Audio("assets/cogerPowerUp.mp3"),
+	laser: new Audio("assets/laser.mp3"),
+	gameSound: new Audio("assets/sonidoJuego.mp3"),
+	boom: new Audio('assets/boom.mp3'),
 	keys: {},
 
 	init(id) {
@@ -66,7 +66,7 @@ const game = {
 
 	initialBackground() {
 		let bgImg = new Image();
-		bgImg.src = "./assets/startBackground2.jpg";
+		bgImg.src = "assets/startBackground2.jpg";
 		bgImg.onload = () => {
 			this.ctx.drawImage(bgImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			this.ctx.fillStyle = "white";
@@ -449,7 +449,7 @@ const game = {
 		this.winGameAudio.play()
 		if (this.framesCounter % 5 === 0) {
 			let asdImg = new Image();
-			asdImg.src = "./assets/error.jpg";
+			asdImg.src = "assets/error.jpg";
 			asdImg.onload = () => {
 				this.ctx.drawImage(asdImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -464,7 +464,7 @@ const game = {
 			this.clear();
 
 			let winImg = new Image();
-			winImg.src = "./assets/winner.png";
+			winImg.src = "assets/winner.png";
 			winImg.onload = () => {
 				this.ctx.drawImage(winImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -485,7 +485,7 @@ const game = {
 		this.gameOverMusic.play();
 		if (this.framesCounter % 5 === 0) {
 			let error = new Image();
-			error.src = "./assets/error.jpg";
+			error.src = "assets/error.jpg";
 			error.onload = () => {
 				this.ctx.drawImage(error, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -500,7 +500,7 @@ const game = {
 			this.clear();
 
 			let gameOverImage = new Image();
-			gameOverImage.src = "./assets/game_over.jpg";
+			gameOverImage.src = "assets/game_over.jpg";
 			gameOverImage.onload = () => {
 				this.ctx.drawImage(
 					gameOverImage,
