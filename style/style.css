@@ -1,33 +1,26 @@
-/* @font-face {
-    font-family: 'invaders';
-    src: url('../assets/space_invaders')
-} */
-/* 
 @font-face {
-    font-family: "Space invaders";
-    src: url(../assets/space_invaders/space_invaders.ttf);
-} */
-@font-face {font-family:"space invaders Regular";
-src:
-url("../assets/space_invaders_regular/space_invaders_Regular/space_invaders.ttf") format("truetype");
-font-weight:normal;font-style:normal;}
+    font-family: "space invaders Regular";
+    src:
+        url("../assets/space_invaders_regular/space_invaders_Regular/space_invaders.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 
 
 
 body {
-    margin: 0 ;
+    margin: 0;
     padding: 0;
-    /* font-family: invaders; */
     background-image: url('../assets/abstract-colorful-geometric-hipster-pattern-elements-on-black-mosaic-background-and-retro-80-s-texture-vector.jpg');
-    /* background-repeat: no-repeat; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    
+
 }
+
 #audio {
     display: none;
 }
@@ -35,17 +28,13 @@ body {
 div {
     font-family: 'space invaders Regular';
     color: white;
-    font-size:x-large;
-    /* font-weight: 900; */
+    font-size: x-large;
     text-align: center;
-    background-color: rgba( 0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
     padding: 25px;
-    
-
 }
 
 button {
-    /* -webkit-transition: 1s linear; */
     transition: .2s linear;
     font-family: 'space invaders Regular';
     font-size: xx-large;
@@ -54,29 +43,28 @@ button {
     padding: 30px;
 }
 
-/* .box{
-  background-color: #F1C40F;
-} */
-#easy:hover{
-  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
-  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
-}
-#mid:hover{
-  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
-  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
-}
-#hard:hover{
-  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
-  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
-}
-#ironhacker:hover{
-  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
-  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
+#easy:hover {
+    padding: 40px;
+    box-shadow: 5px 5px 0px .5px rgba(255, 255, 255, 1);
 }
 
-.border{
-    border: 6px solid #eb2d6d ;
+#mid:hover {
+    padding: 40px;
+    box-shadow: 5px 5px 0px .5px rgba(255, 255, 255, 1);
+}
 
+#hard:hover {
+    padding: 40px;
+    box-shadow: 5px 5px 0px .5px rgba(255, 255, 255, 1);
+}
+
+#ironhacker:hover {
+    padding: 40px;
+    box-shadow: 10px 10px 0px 2px rgba(255, 255, 255, 1);
+}
+
+.border {
+    border: 6px solid #eb2d6d;
 }
 
 .hideBtn {
@@ -86,38 +74,36 @@ button {
 
 #easy {
     font-size: medium;
+    color: white;
     background-color: #02a42c;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 #mid {
     font-size: medium;
     background-color: #fedf2d;
+    margin: 30px;
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 #hard {
     font-size: medium;
     background-color: #eb2d6d;
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 #ironhacker {
     background-color: #71d7f0;
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
 }
 
-
-
-
-
-
-
 canvas {
-    /* position: absolute; */
-    /* top: 50%; */
-    /* left: 50%; */
     margin-top: 4em;
-    /* margin-bottom: auto; */
     border: 7px solid #eb2d6d;
     background-color: rgb(53, 53, 53);
-    /* background-color: white; */
 }
 
 .gameOver {

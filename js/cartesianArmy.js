@@ -7,18 +7,17 @@ class CartesianArmy {
   }
 
 
-  movH(){
+  movH() {
 
-    if (this.isOrientationRigth){
+    if (this.isOrientationRigth) {
 
       for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-        this.arrCartesianEnemies[i].x += 5; 
+        this.arrCartesianEnemies[i].x += 5;
       }
-    }
-    else {
+    } else {
 
       for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
-        this.arrCartesianEnemies[i].x -= 5; 
+        this.arrCartesianEnemies[i].x -= 5;
       }
     }
   }
@@ -29,33 +28,31 @@ class CartesianArmy {
       this.arrCartesianEnemies[i].y += 10;
     }
   }
-  
+
   checkMov() {
 
     for (let i = 0; i < this.arrCartesianEnemies.length; i++) {
 
-        if ((this.arrCartesianEnemies[i].x + 5 > this.canvasSize.w-20) && this.isOrientationRigth) {
+      if ((this.arrCartesianEnemies[i].x + 5 > this.canvasSize.w - 20) && this.isOrientationRigth) {
 
-          this.isOrientationRigth = false;
-          return false;
-          
-        }
-        else if ((this.arrCartesianEnemies[i].x - 5 < 0) && this.isOrientationRigth == false){
+        this.isOrientationRigth = false;
+        return false;
 
-          this.isOrientationRigth = true;
-          return false;
-          
-        }
+      } else if ((this.arrCartesianEnemies[i].x - 5 < 0) && this.isOrientationRigth == false) {
+
+        this.isOrientationRigth = true;
+        return false;
+
+      }
     }
     return true;
   }
 
-  movArmy(){
-   
-    if (this.checkMov() == true){
+  movArmy() {
+
+    if (this.checkMov() == true) {
       this.movH();
-    }
-    else{
+    } else {
       this.movDown();
     }
   }

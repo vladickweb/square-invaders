@@ -1,1 +1,1 @@
-window.onload = () => game.init('my-canvas')
+window.onload = () => game.init("my-canvas");
