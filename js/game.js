@@ -517,7 +517,7 @@ const game = {
 				game.ctx.font = "white space invaders Regular";
 				game.ctx.fillText("READY", 200, 200);
 			}, 2000);
-		}, 1000);
+		}, 3000);
 	},
 
 	showScore() {
