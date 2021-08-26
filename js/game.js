@@ -10,6 +10,7 @@ const game = {
 	FPS: 60,
 	framesCounter: 0,
 	timeInterval: 60,
+	
 
 	background: undefined,
 
@@ -18,7 +19,8 @@ const game = {
 	linearEnemies: [],
 	army: [],
 	powerUp: [],
-
+	arrColors: ["#D0aCE1","#7219CE","#E86F93","#15EEF8","#EBDE90","#D7BD12"],
+	// arrColors: ['blue', 'red', 'orange', 'yellow', 'white', 'blue'],
 
 	aleatorySpeed: undefined,
 	aleatoryX: undefined,
@@ -32,6 +34,10 @@ const game = {
 	finalBossDamage: 0,
 	score: undefined,
 	restrictAddEventListener: false,
+	level: undefined,
+
+
+
 
 	
 	music: new Audio('../assets/bensound-epic.mp3'),
@@ -49,18 +55,13 @@ const game = {
 		this.setDimensions();
 		ship = new Ship(this.ctx, this.canvasSize);
 		this.showScore()
-		// this.cartesianArmy = new CartesianArmy (this.ctx, this.canvasSize);//OBJECT ARMY!!!!
-		// this.cartesianArmy.recruit();
-		// this.start();
 		this.cartesianArmy = new CartesianArmy(this.ctx, this.canvasSize);
 		this.cartesianArmy.recruit();
 		this.finalBoss = new FinalBoss(this.ctx, this.canvasSize)
 		this.initialBackground()
-
-
-		// this.initialBackground = new BgStart(this.ctx, this.canvasSize)
-		
-		// this.initialBackground.draw()
+		this.ctx.fillStyle = 'white'
+		this.ctx.font = 'white space invaders Regular'
+		this.ctx.fillText('READY', 200, 200)
 	},
 
 	setDimensions() {
@@ -75,14 +76,14 @@ const game = {
     	bgImg.src = '../assets/startBackground2.jpg';
     	bgImg.onload = () => {
         this.ctx.drawImage(bgImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
+		this.ctx.fillStyle = 'white'
+		this.ctx.font = ' 50px space invaders Regular'
+		this.ctx.fillText('READY?', 100, 200)
 }
 	},
 
 	start() {
 		interval = setInterval(() => {
-
-		
-
 			this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
 			this.clear();
 			this.drawAll();
@@ -91,10 +92,6 @@ const game = {
 			this.generatePowerUps()
 			this.generateZigZagEnemies();
 			this.generateLinearEnemies();
-
-			// if (this.cartesianArmy.arrCartesianEnemies.length === 0 && this.counterPoints < 5){
-			// }
-			
 			this.isCollision()
 			this.shipCollisionLinear()
 			this.shipCollisionZigZag()
@@ -102,36 +99,50 @@ const game = {
 			ship.isAmmunition();
 			this.updateScore()
 			this.cartesianArmy.movArmy()
-			this.win()
 			this.controls();
-			
-
-
-
 		}, 1000 / this.FPS);
-
-
 		setInterval(() => {
 			this.cartesianArmy.checkMov();
 		}, 1000)
+	},
 
+	reset() {
+		game.framesCounter = 0,
+		game.ship = undefined,
+		game.zigZagEnemies = [],
+		game.linearEnemies = [],
+		game.army = [],
+		game.powerUp = [],
+		game.aleatorySpeed = undefined,
+		game.aleatoryX = undefined,
+		game.aleatorySize = undefined,
+		game.aleatoryRightLimit = undefined,
+		game.aleatoryLeftLimit = undefined,
+		game.randomSign = undefined,
+		game.aleatoryGravity = undefined,
+		game.aleatoryColor = undefined,
+		game.counterPoints = 0,
+		game.finalBossDamage = 0,
+		game.score = undefined,
+		game.restrictAddEventListener = false,
+		game.level = undefined
+		game.clear()
+		game.init('my-canvas')
+		
 
 	},
 
-	reset() {},
-
 	drawAll() {
-
 		ship.draw();
 		this.powerUp[0] ? this.powerUp[0].draw() : null;
 		this.cartesianArmy.draw()
-		if (this.cartesianArmy.arrCartesianEnemies.length === 0 && this.counterPoints < 100) {
+		if (this.cartesianArmy.arrCartesianEnemies.length === 0 && this.counterPoints < 50) {
 
 			this.zigZagEnemies[0] ? this.zigZagEnemies[0].draw() : null;
 			this.linearEnemies[0] ? this.linearEnemies[0].draw() : null;
 
 		}
-		else if (this.counterPoints >= 100) {
+		else if (this.counterPoints >= 50) {
 			this.finalBoss.draw()
 			this.linearEnemies.length = 0
 			this.zigZagEnemies.length = 0
@@ -173,7 +184,7 @@ const game = {
 	},
 
 	powerBullets() {
-		if (this.framesCounter % 10 === 0 && this.counterPoints < 100) {
+		if (this.framesCounter % 10 === 0 && this.counterPoints < 50) {
 			ship.createPowerBullets()
 		}
 	},
@@ -182,7 +193,7 @@ const game = {
 		if (ship.isPowerUp) {
 			ship.speed = ship.powerUpSpeed
 			this.powerBullets()
-			if (this.framesCounter % 1000 === 0) {
+			if (this.framesCounter % 600 === 0) {
 				ship.isPowerUp = false
 				ship.speed = 5
 			}
@@ -190,23 +201,38 @@ const game = {
 	},
 
 	generatePowerUps() {
-		if (this.framesCounter % 1000 === 0 && this.powerUp.length === 0) {
+		if (this.framesCounter % this.getRandomInt(1000, 2000) === 0 && this.powerUp.length === 0) {
 			this.powerUp.push(new PowerUp(this.ctx, this.canvasSize));
 		}
 	},
 
 	generateZigZagEnemies() {
 		if (this.zigZagEnemies.length === 0) {
-
-			this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(2, 7), this.getRandomInt(5, 15), this.getRandomInt(10, 100), this.getRandomInt(10,100), 'yellow'))
+			if (this.level === 'easy') {
+				this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(1, 3), this.getRandomInt(1, 3), this.getRandomInt(10, 100), this.getRandomInt(10,100), this.arrColors[this.getRandomInt(0,5)]))
+			} else if (this.level === 'mid') {
+				this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(2, 5), this.getRandomInt(2, 5), this.getRandomInt(10, 100), this.getRandomInt(10,100), this.arrColors[this.getRandomInt(0,5)]))
+			} else if (this.level === 'hard') {
+				this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(5, 9), this.getRandomInt(5, 9), this.getRandomInt(10, 100), this.getRandomInt(10,100), this.arrColors[this.getRandomInt(0,5)]))
+			} else if (this.level === 'ironhacker'){
+				this.zigZagEnemies.push(new ZigZagEnemies(this.ctx, this.canvasSize, this.getRandomInt(0,400), this.getRandomInt(5, 15), this.getRandomInt(5, 15), this.getRandomInt(10, 100), this.getRandomInt(10,100), this.arrColors[this.getRandomInt(0,5)]))
+			}
 		}
 	},
 
 	generateLinearEnemies() {
-		// console.log('entro a generar')
 		if (this.linearEnemies.length === 0) {
-			// console.log('GENERO')
-			this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(5, 15), this.getRandomInt(20, 100), 'blue', this.getRandomInt(0, 400)))
+			if (this.level === 'easy'){
+				this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(1, 3), this.getRandomInt(20, 100), this.arrColors[this.getRandomInt(0,5)], this.getRandomInt(0, 400)))
+
+			}else if (this.level === 'mid'){
+				this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(3, 5), this.getRandomInt(20, 100), this.arrColors[this.getRandomInt(0,5)], this.getRandomInt(0, 400)))
+			}else if (this.level === 'hard'){
+				this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(5, 9), this.getRandomInt(20, 100), this.arrColors[this.getRandomInt(0,5)], this.getRandomInt(0, 400)))
+
+			}else if (this.level === 'ironhacker'){
+				this.linearEnemies.push(new LinearEnemies(this.ctx, this.canvasSize, this.getRandomInt(5, 15), this.getRandomInt(20, 100), this.arrColors[this.getRandomInt(0,5)], this.getRandomInt(0, 400)))
+			}
 		}
 	},
 
@@ -219,8 +245,10 @@ const game = {
 					ship.ammunition.pop()
 					this.powerUp.pop()
 					ship.isPowerUp = true
-					this.zigZagEnemies.pop()
-					this.linearEnemies.pop()
+					// this.clear()
+					// this.ctx.fillStyle =this.arrColors[this.getRandomInt(0,6)]
+					// this.ctx.font = '50px space invaders Regular';
+					// this.ctx.fillText('POWER-UP', 100, 200)
 				}
 			} 
 	},
@@ -236,6 +264,7 @@ const game = {
 					ship.ammunition[0].x + ship.ammunition[0].width >= enemy.x) {
 						this.cartesianArmy.arrCartesianEnemies.splice(this.cartesianArmy.arrCartesianEnemies.indexOf(enemy), 1)
 						ship.ammunition.pop()
+						this.counterPoints++
 						return true
 				}
 			})
@@ -243,11 +272,18 @@ const game = {
 
 		
 		else if (ship.ammunition.length > 0) {
-		// colision powerUp - balas
-			
-
+			console.log('entro')
 			// colision balas - lineares
-			if (ship.ammunition[0].y <= this.linearEnemies[0].y + this.linearEnemies[0].size &&
+			
+				//  colisión balas - zig-zag
+			if (ship.ammunition[0].y <= this.zigZagEnemies[0].y + this.zigZagEnemies[0].width &&
+				ship.ammunition[0].x <= (this.zigZagEnemies[0].x + this.zigZagEnemies[0].width) &&
+				ship.ammunition[0].x + ship.ammunition[0].width >= this.zigZagEnemies[0].x) {
+				ship.ammunition.pop()
+				this.zigZagEnemies.pop()
+				this.counterPoints++
+			} 
+			else if (ship.ammunition[0].y <= this.linearEnemies[0].y + this.linearEnemies[0].size &&
 				ship.ammunition[0].x <= (this.linearEnemies[0].x + this.linearEnemies[0].size) &&
 				ship.ammunition[0].x + ship.ammunition[0].width >= this.linearEnemies[0].x) {
 				ship.ammunition.pop()
@@ -255,20 +291,26 @@ const game = {
 				this.counterPoints++
 			} 
 			
-				//  colisión balas - zig-zag
-			else if (ship.ammunition[0].y <= this.zigZagEnemies[0].y + this.zigZagEnemies[0].width &&
-				ship.ammunition[0].x <= (this.zigZagEnemies[0].x + this.zigZagEnemies[0].width) &&
-				ship.ammunition[0].x + ship.ammunition[0].width >= this.zigZagEnemies[0].x) {
-				ship.ammunition.pop()
-				this.zigZagEnemies.pop()
-				this.counterPoints++
-			} 
-			
 			// colision balas - finalBoss
 			else if (this.finalBoss.y + this.finalBoss.height >= ship.ammunition[0].y) {
 				this.counterPoints++
-				ship.ammunition.pop()				
-				
+				ship.ammunition.pop()
+
+				// ship.width += 5
+				// ship.height += 5
+				if (this.finalBoss.width > 0){
+					this.finalBoss.color = '#eb2d6d' 
+					setTimeout(() =>{
+						this.finalBoss.color = '#71d7f0'
+					}, 50)
+					this.finalBoss.height -= 5 
+					this.finalBoss.width -= 5
+					this.finalBoss.x += 2.5
+				}
+
+				else if (this.finalBoss.width <= 0){
+					this.win()
+				}
 			}
 		}
 
@@ -308,27 +350,71 @@ const game = {
 	
 	},
 
-	win(){
-			if(this.finalBoss.y + this.finalBoss.width === ship.y - 10){
-				clearInterval(interval)
-				setTimeout(()=>{
-					this.clear()
-					this.ctx.font = '100px space invaders Regular';
-					this.ctx.fillText('WINNER!', 150, 300)
-				})
+	win(){			
+
+		if (this.framesCounter % 5 === 0){
+			let asdImg = new Image();
+			asdImg.src = '../assets/error.jpg';
+			asdImg.onload = () => {
+			this.ctx.drawImage(asdImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
+			// this.ctx.fillStyle = 'white'
 			}
-		},
+		};
+		button.removeAttribute('disabled')
+		button2.removeAttribute('disabled')
+		button3.removeAttribute('disabled')
+		button4.removeAttribute('disabled')
+
+		setTimeout(()=>{
+			clearInterval(interval)
+			this.clear()
+
+			let winImg = new Image();
+			winImg.src = '../assets/winner.png';
+			winImg.onload = () => {
+			this.ctx.drawImage(winImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
+			}
+			setTimeout(() => {
+				game.initialBackground()
+				game.ctx.fillStyle = 'white'
+				game.ctx.font = 'white space invaders Regular'
+				game.ctx.fillText('READY', 200, 200)
+			}, 1000)
+		},1000)
+		// },500)
+	},
 
 
 	gameOver() {
-		clearInterval(interval)
+		if (this.framesCounter % 5 === 0){
+			let error = new Image();
+			error.src = '../assets/error.jpg'
+			error.onload = () => {
+				this.ctx.drawImage(error, 0, 0, this.canvasSize.w, this.canvasSize.h)
+			}
+		}
 		// button.classList.remove('hideBtn')
 		button.removeAttribute('disabled')
+		button2.removeAttribute('disabled')
+		button3.removeAttribute('disabled')
+		button4.removeAttribute('disabled')
+		
 		setTimeout(() => {
+			clearInterval(interval)
 			this.clear()
-			this.ctx.font = '30px space invaders Regular';
-			this.ctx.fillText(`GAME OVER`, 150, 300)
-			console.log('done')
+				
+			let gameOverImage = new Image();
+    		gameOverImage.src = '../assets/game_over.jpg';
+    		gameOverImage.onload = () => {
+       		this.ctx.drawImage(gameOverImage, 0, 0, this.canvasSize.w, this.canvasSize.h);
+			}
+
+			setTimeout(() => {
+				game.initialBackground()
+				game.ctx.fillStyle = 'white'
+				game.ctx.font = 'white space invaders Regular'
+				game.ctx.fillText('READY', 200, 200)
+			}, 1000)
 
 		}, 500)
 
@@ -367,10 +453,54 @@ window.addEventListener('keyup', function(e){
 }, true)
 
 
-const button = document.getElementById('start')
+const button = document.getElementById('easy')
 button.addEventListener('click', () => {
+	game.reset()
+	game.level = 'easy'
 	game.start()
 	button.setAttribute('disabled', '')
+	button2.setAttribute('disabled', '')
+	button3.setAttribute('disabled', '')
+	button4.setAttribute('disabled', '')
+
 	// button.classList.add('hideBtn')
 })
 // game.initialBackground()
+const button2 = document.getElementById('mid')
+button2.addEventListener('click', () => {
+	game.reset()
+	game.level = 'mid'
+	game.start()
+	button.setAttribute('disabled', '')
+	button2.setAttribute('disabled', '')
+	button3.setAttribute('disabled', '')
+	button4.setAttribute('disabled', '')
+
+	// button.classList.add('hideBtn')
+})
+
+const button3 = document.getElementById('hard')
+button3.addEventListener('click', () => {
+	game.reset()
+	game.level = 'hard'
+	game.start()
+	button.setAttribute('disabled', '')
+	button2.setAttribute('disabled', '')
+	button3.setAttribute('disabled', '')
+	button4.setAttribute('disabled', '')
+
+	// button.classList.add('hideBtn')
+})
+
+const button4 = document.getElementById('ironhacker')
+button4.addEventListener('click', () => {
+	game.reset()
+	game.level = 'ironhacker'
+	game.start()
+	button.setAttribute('disabled', '')
+	button2.setAttribute('disabled', '')
+	button3.setAttribute('disabled', '')
+	button4.setAttribute('disabled', '')
+
+	// button.classList.add('hideBtn')
+})

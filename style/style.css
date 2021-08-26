@@ -35,33 +35,48 @@ body {
 div {
     font-family: 'space invaders Regular';
     color: white;
-    font-size: xx-large;
-    font-weight: 900;
+    font-size:x-large;
+    /* font-weight: 900; */
     text-align: center;
-    background-color: black;
-    border: 6px solid red ;
-    padding: 45px;
+    background-color: rgba( 0, 0, 0, 1);
+    padding: 25px;
     
 
 }
 
 button {
-    
     /* -webkit-transition: 1s linear; */
     transition: .2s linear;
     font-family: 'space invaders Regular';
     font-size: xx-large;
-    border-radius: 10%;
-    background-color: red;
+    border-radius: 10px;
+    background-color: #71d7f0;
     padding: 30px;
 }
 
 /* .box{
   background-color: #F1C40F;
 } */
-button:hover{
+#easy:hover{
   /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
-  box-shadow: 10px 10px 14px 2px rgba(255, 0, 0, 0.47);
+  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
+}
+#mid:hover{
+  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
+  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
+}
+#hard:hover{
+  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
+  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
+}
+#ironhacker:hover{
+  /* -webkit-box-shadow: 10px 10px 14px 2px rgba(26, 1, 255, 0.47); */
+  box-shadow: 10px 10px 14px 2px rgba(255, 255, 255, 0.4);
+}
+
+.border{
+    border: 6px solid #eb2d6d ;
+
 }
 
 .hideBtn {
@@ -69,15 +84,42 @@ button:hover{
     display: none;
 }
 
+#easy {
+    font-size: medium;
+    background-color: #02a42c;
+}
+
+#mid {
+    font-size: medium;
+    background-color: #fedf2d;
+}
+
+#hard {
+    font-size: medium;
+    background-color: #eb2d6d;
+}
+
+#ironhacker {
+    background-color: #71d7f0;
+}
+
+
+
+
+
+
+
 canvas {
     /* position: absolute; */
     /* top: 50%; */
     /* left: 50%; */
     margin-top: 4em;
     /* margin-bottom: auto; */
-    border: 7px solid red;
+    border: 7px solid #eb2d6d;
     background-color: rgb(53, 53, 53);
-
-
+    /* background-color: white; */
 }
 
+.gameOver {
+    background-color: black;
+}

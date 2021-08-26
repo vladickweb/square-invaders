@@ -16,7 +16,7 @@ class Bullet {
 
     draw(){
         if (!ship.isPowerUp){
-            this.ctx.fillStyle = 'green'
+            this.ctx.fillStyle = 'white'
             game.ctx.fillRect(ship.ammunition[0].x, ship.ammunition[0].y, ship.ammunition[0].width, ship.ammunition[0].height)
             this.move()
 
@@ -42,7 +42,7 @@ class Bullet {
 
     drawZoomOut(){
         this.ctx = game.ctx
-        this.ctx.fillStyle = 'orange'
+        this.ctx.fillStyle = 'white'
         this.ctx.fillRect(this.x+6, this.y, this.height, this.width)
         this.move()
         this.isZoom = true

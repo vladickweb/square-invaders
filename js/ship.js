@@ -33,8 +33,9 @@ class Ship {
     draw(){
         if (!this.isDestroyed){
             this.ctx = game.ctx 
-            this.ctx.fillStyle = 'red'
+            this.ctx.fillStyle = '#eb2d6d '
             this.ctx.fillRect(this.x, this.y, this.width, this.height)
+            
 
         }else {
             this.ctx = game.ctx 
@@ -45,9 +46,7 @@ class Ship {
 
     isAmmunition(){
         if(this.ammunition[0]){
-            // if (game.counterPoints > 5){
-                // this.ammunition[0].drawZoomOut()
-            // }
+       
             if (!this.ammunition[0].isZoom){
                 this.ammunition[0].draw()
             }

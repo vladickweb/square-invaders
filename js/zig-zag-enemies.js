@@ -1,5 +1,5 @@
 class  ZigZagEnemies{
-    constructor(ctx, canvasSize, x, speedX, speedY, height, width, leftLimit, randomColor) {
+    constructor(ctx, canvasSize, x, speedX, speedY, height, leftLimit, color) {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.x = x
@@ -9,27 +9,19 @@ class  ZigZagEnemies{
         this.speedX = speedX     //15
         this.speedY = speedY
         this.gravity = .9//10
-        // this.rightLimit = rightLimit
         this.leftLimit = leftLimit
-        // this.randomSign = randomSign
-        // this.changedSpeed = undefined
-        this.color = randomColor
+        this.color = color
 
     }
 
     moveTo(){
-        // console.log('me dibujo')
         this.y += this.speedY
-
             if (this.leftLimit > this.x < this.canvasSize.w){
             this.x += this.speedX
-
             if (this.x > 2* this.canvasSize.w /4){
                 this.speedX -= this.gravity
                 this.x += this.speedX
             }
-
-
             else if (this.x <  50 +this.canvasSize.w / 4) {
                 this.speedX += this.gravity
                 this.x += this.speedX
