@@ -72,7 +72,7 @@ const game = {
 
   initialBackground() {
     let bgImg = new Image();
-    bgImg.src = "../assets/startBackground2.jpg";
+    bgImg.src = "./assets/startBackground2.jpg";
     bgImg.onload = () => {
       this.ctx.drawImage(bgImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
       this.ctx.fillStyle = "white";
