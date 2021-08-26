@@ -480,6 +480,8 @@ const game = {
 	},
 
 	gameOver() {
+			clearInterval(interval);
+			this.clear();
 		this.gameSound.pause();
 		this.gameSound.currentTime = 0;
 		this.gameOverMusic.play();
@@ -492,8 +494,6 @@ const game = {
 		}
 
 		setTimeout(() => {
-			clearInterval(interval);
-			this.clear();
 			button.removeAttribute("disabled");
 			button2.removeAttribute("disabled");
 			button3.removeAttribute("disabled");
@@ -516,7 +516,7 @@ const game = {
 				game.ctx.fillStyle = "white";
 				game.ctx.font = "white space invaders Regular";
 				game.ctx.fillText("READY", 200, 200);
-			}, 2000);
+			}, 1000);
 		}, 500);
 	},
 
