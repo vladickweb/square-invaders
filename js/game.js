@@ -483,7 +483,7 @@ const game = {
 		this.gameSound.pause();
 		this.gameSound.currentTime = 0;
 		this.gameOverMusic.play();
-		if (this.framesCounter % 5 === 0) {
+		if (this.framesCounter % 3 === 0) {
 			let error = new Image();
 			error.src = "assets/error.jpg";
 			error.onload = () => {
