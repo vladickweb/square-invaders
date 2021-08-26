@@ -62,6 +62,8 @@ class Ship {
     createBullet(){
         if (this.ammunition.length === 0){
             this.ammunition.push(new Bullet(this.ctx, this.canvasSize))
+            game.laser.load()
+			game.laser.play()
         }
     }
 

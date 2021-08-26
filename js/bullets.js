@@ -12,9 +12,11 @@ class Bullet {
 
     move() {
         this.y += -1 * this.speed
+    
     }
 
     draw(){
+
         if (!ship.isPowerUp){
             this.ctx.fillStyle = 'white'
             game.ctx.fillRect(ship.ammunition[0].x, ship.ammunition[0].y, ship.ammunition[0].width, ship.ammunition[0].height)
