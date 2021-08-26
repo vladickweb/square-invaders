@@ -449,7 +449,7 @@ const game = {
 		this.winGameAudio.play()
 		if (this.framesCounter % 5 === 0) {
 			let asdImg = new Image();
-			asdImg.src = "../assets/error.jpg";
+			asdImg.src = "./assets/error.jpg";
 			asdImg.onload = () => {
 				this.ctx.drawImage(asdImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -464,7 +464,7 @@ const game = {
 			this.clear();
 
 			let winImg = new Image();
-			winImg.src = "../assets/winner.png";
+			winImg.src = "./assets/winner.png";
 			winImg.onload = () => {
 				this.ctx.drawImage(winImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -476,7 +476,7 @@ const game = {
 				game.ctx.font = "white space invaders Regular";
 				game.ctx.fillText("READY", 200, 200);
 			}, 3500);
-		}, 1000);
+		}, 3000);
 	},
 
 	gameOver() {
@@ -485,7 +485,7 @@ const game = {
 		this.gameOverMusic.play();
 		if (this.framesCounter % 5 === 0) {
 			let error = new Image();
-			error.src = "../assets/error.jpg";
+			error.src = "./assets/error.jpg";
 			error.onload = () => {
 				this.ctx.drawImage(error, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
@@ -500,7 +500,7 @@ const game = {
 			this.clear();
 
 			let gameOverImage = new Image();
-			gameOverImage.src = "../assets/game_over.jpg";
+			gameOverImage.src = "./assets/game_over.jpg";
 			gameOverImage.onload = () => {
 				this.ctx.drawImage(
 					gameOverImage,
@@ -583,7 +583,7 @@ const button3 = document.getElementById("hard");
 button3.addEventListener("click", () => {
 	game.reset();
 	game.level = "hard";
-	game.start();
+	game.start();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
 	button.setAttribute("disabled", "");
 	button2.setAttribute("disabled", "");
 	button3.setAttribute("disabled", "");
