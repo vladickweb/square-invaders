@@ -6,9 +6,9 @@ class ZigZagEnemies {
         this.y = 0
         this.height = height
         this.width = this.height
-        this.speedX = speedX //15
+        this.speedX = speedX 
         this.speedY = speedY
-        this.gravity = .9 //10
+        this.gravity = .9 
         this.leftLimit = leftLimit
         this.color = color
 
