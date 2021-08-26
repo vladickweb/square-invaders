@@ -490,14 +490,14 @@ const game = {
 				this.ctx.drawImage(error, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
 		}
-		button.removeAttribute("disabled");
-		button2.removeAttribute("disabled");
-		button3.removeAttribute("disabled");
-		button4.removeAttribute("disabled");
 
 		setTimeout(() => {
 			clearInterval(interval);
 			this.clear();
+			button.removeAttribute("disabled");
+			button2.removeAttribute("disabled");
+			button3.removeAttribute("disabled");
+			button4.removeAttribute("disabled");
 
 			let gameOverImage = new Image();
 			gameOverImage.src = "assets/game_over.jpg";
@@ -517,7 +517,7 @@ const game = {
 				game.ctx.font = "white space invaders Regular";
 				game.ctx.fillText("READY", 200, 200);
 			}, 2000);
-		}, 1000);
+		}, 500);
 	},
 
 	showScore() {
