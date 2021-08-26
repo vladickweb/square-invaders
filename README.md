@@ -5,4 +5,4 @@ First Ironhack's Bootcamp Project
 
 ### enjoy!
 
-* [link to play](http://www.google.com)
+* [link to play](https://vladickweb.github.io/minimalist-space-invaders/)
