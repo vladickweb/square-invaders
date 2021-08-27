@@ -1,9 +1,7 @@
 #  MINIMALIST SQUARE-INVADERS
-First Ironhack's Bootcamp Project
+Project developed using JavaScript Vanilla, html5, css3 and Canvas.
 
-## PROJECT DEVELOPED USING JAVASCRIPT VANILLA, HTML, CSS AND CANVAS.
-
-### ENJOY!
+## ENJOY!
 
 * [link to play](https://vladickweb.github.io/minimalist-space-invaders/)
 
