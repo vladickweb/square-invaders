@@ -1,4 +1,4 @@
-#  MINIMALIST SQUARE-INVADERS
+# SQUARE-INVADERS
 Project developed using JavaScript Vanilla, html5, css3 and Canvas.
 
 ## ENJOY!
