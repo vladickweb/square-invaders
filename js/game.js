@@ -454,6 +454,25 @@ const game = {
 				this.ctx.drawImage(asdImg, 0, 0, this.canvasSize.w, this.canvasSize.h);
 			};
 		}
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+			ship.createBullet();
+
 		button.removeAttribute("disabled");
 		button2.removeAttribute("disabled");
 		button3.removeAttribute("disabled");
@@ -475,7 +494,7 @@ const game = {
 				game.ctx.fillStyle = "white";
 				game.ctx.font = "white space invaders Regular";
 				game.ctx.fillText("READY", 200, 200);
-			}, 3500);
+			}, 5500);
 		}, 3000);
 	},
 
@@ -483,7 +502,7 @@ const game = {
 		this.gameSound.pause();
 		this.gameSound.currentTime = 0;
 		this.gameOverMusic.play();
-		if (this.framesCounter % 3 === 0) {
+		if (this.framesCounter % 5 === 0) {
 			let error = new Image();
 			error.src = "assets/error.jpg";
 			error.onload = () => {
@@ -516,8 +535,8 @@ const game = {
 				button2.removeAttribute("disabled");
 				button3.removeAttribute("disabled");
 				button4.removeAttribute("disabled");
-			}, 1500);
-		}, 500);
+			}, 4500);
+		}, 1600);
 	},
 
 	showScore() {
