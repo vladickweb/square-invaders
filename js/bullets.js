@@ -3,7 +3,7 @@ class Bullet {
         this.ctx = ctx;
         this.canvasSize = canvasSize
         this.y = ship.y
-        this.height = 13
+        this.height = 12
         this.width = 13
         this.x = (ship.x + ship.width / 2) - this.width / 2
         this.speed = 20
